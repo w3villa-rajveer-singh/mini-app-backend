@@ -5,9 +5,10 @@ gem 'connection_pool', '~> 2.4'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.1.0"
+gem 'pg'
 
 # Use mysql as the database for Active Record
-gem "mysql2", "~> 0.5"
+# gem "mysql2", "~> 0.5"
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", ">= 5.0"
