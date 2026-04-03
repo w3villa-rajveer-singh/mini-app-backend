@@ -75,12 +75,13 @@ Rails.application.configure do
 
   config.action_mailer.smtp_settings = {
   address: "smtp.sendgrid.net",
-  port: 587,
+  port: 2525,
   domain: "mini-app-backend-mkjh.onrender.com",
-  user_name: ENV["SENDGRID_USERNAME"],
+  user_name: "apikey",
   password: ENV["SENDGRID_PASSWORD"],
   authentication: :plain,
-  enable_starttls_auto: true
+  enable_starttls_auto: true,
+  openssl_verify_mode: 'none'
   }
 
   config.action_mailer.perform_deliveries = true
