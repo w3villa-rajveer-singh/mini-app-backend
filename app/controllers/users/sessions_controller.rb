@@ -1,10 +1,18 @@
+require 'jwt'
+
 class Users::SessionsController < Devise::SessionsController
   respond_to :json
 
   private
 
   def current_token
-    request.env['warden-jwt_auth.token']
+    # Generate JWT token manually
+    payload = { 
+      sub: resource.id, 
+      user_id: resource.id,
+      exp: 1.day.from_now.to_i 
+    }
+    JWT.encode(payload, Rails.application.credentials.secret_key_base)
   end
 
   def respond_with(resource, _opts = {})
