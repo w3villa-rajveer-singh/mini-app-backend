@@ -71,6 +71,10 @@ Rails.application.configure do
   protocol: 'https'
   }
 
+  config.action_mailer.default_options = {
+  from: 'rajveer.singh@w3villa.com'
+  }
+
   config.action_mailer.delivery_method = :smtp
 
   config.action_mailer.smtp_settings = {
