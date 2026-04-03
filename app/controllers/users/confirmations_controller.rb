@@ -2,11 +2,12 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   def show
     self.resource = resource_class.confirm_by_token(params[:confirmation_token])
 
+    frontend_url = ENV["FRONTEND_URL"]
+
     if resource.errors.empty?
-      # Just redirect to login (NO auto login)
-      redirect_to "http://localhost:3002/login?confirmed=true"
+      redirect_to "#{frontend_url}/login?confirmed=true", allow_other_host: true
     else
-      redirect_to "http://localhost:3002/auth-error?message=invalid_or_expired"
+      redirect_to "#{frontend_url}/auth-error?message=invalid_or_expired", allow_other_host: true
     end
   end
 end
