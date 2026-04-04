@@ -12,7 +12,7 @@ class Users::SessionsController < Devise::SessionsController
       user_id: resource.id,
       exp: 1.day.from_now.to_i 
     }
-    JWT.encode(payload, Rails.application.credentials.secret_key_base)
+    JWT.encode(payload, Rails.application.secret_key_base)
   end
 
   def respond_with(resource, _opts = {})
