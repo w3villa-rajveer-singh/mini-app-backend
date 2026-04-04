@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
   private
 
   # 🔥 Decode JWT and set current_user
- def current_user
+def current_user
   return @current_user if defined?(@current_user)
 
   header = request.headers['Authorization']
@@ -15,12 +15,17 @@ class ApplicationController < ActionController::API
   token = header.split(' ').last
 
   begin
-    decoded = JWT.decode(token, Rails.application.credentials.secret_key_base)[0]
+    decoded = JWT.decode(token, Rails.application.secret_key_base)[0]
+
+    Rails.logger.info "🔥 DECODED JWT: #{decoded}"
 
     user_id = decoded['sub'] || decoded['user_id'] || decoded['id']
 
+    Rails.logger.info "🔥 USER_ID FROM TOKEN: #{user_id}"
+
     @current_user = User.find(user_id)
-  rescue JWT::DecodeError, ActiveRecord::RecordNotFound
+  rescue => e
+    Rails.logger.error "❌ JWT ERROR: #{e.message}"
     @current_user = nil
   end
 end
