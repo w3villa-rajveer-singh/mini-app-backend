@@ -15,7 +15,7 @@ class ApplicationController < ActionController::API
   token = header.split(' ').last
 
   begin
-    decoded = JWT.decode(token, Rails.application.secret_key_base)[0]
+    decoded = JWT.decode(token, Rails.application.credentials.secret_key_base)[0]
 
     user_id = decoded['sub'] || decoded['user_id'] || decoded['id']
 
