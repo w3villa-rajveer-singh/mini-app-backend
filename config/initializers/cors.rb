@@ -7,7 +7,8 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'https://mini-app-frontend-three.vercel.app'
+    origins 'http://localhost:3002', 'https://mini-app-frontend-three.vercel.app'
+
     resource '*',
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head],

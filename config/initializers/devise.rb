@@ -266,7 +266,7 @@ Devise.setup do |config|
   # should add them to the navigational formats lists.
   #
   # The "*/*" below is required to match Internet Explorer requests.
-  config.navigational_formats = []
+  config.navigational_formats = ['*/*', :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -314,16 +314,31 @@ Devise.setup do |config|
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
 
+  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'],
+                scope: 'email',
+                info_fields: 'email,name'
+
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET']
+
   config.jwt do |jwt|
     jwt.secret = ENV['JWT_SECRET']
 
+    # ✅ Issue JWT on login (Devise sessions)
     jwt.dispatch_requests = [
-      ['POST', %r{^/login$}]
+      ['POST', %r{^/login$}],
+      ['GET', %r{^/auth/google_oauth2/callback$}],
+      ['GET', %r{^/auth/facebook/callback$}]
     ]
 
+    # ✅ Revoke token on logout
     jwt.revocation_requests = [
       ['DELETE', %r{^/logout$}]
     ]
+
+    # ✅ CRITICAL: allow JWT for JSON requests
+    jwt.request_formats = {
+      user: [:json]
+    }
 
     jwt.expiration_time = 1.day.to_i
   end
