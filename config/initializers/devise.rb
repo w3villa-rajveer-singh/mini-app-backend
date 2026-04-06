@@ -327,7 +327,6 @@ Devise.setup do |config|
     ENV['GOOGLE_CLIENT_ID'],
     ENV['GOOGLE_CLIENT_SECRET'],
     {
-      scope: 'email,profile',
       callback_url: ENV['GOOGLE_CALLBACK_URL']
     }
 

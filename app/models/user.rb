@@ -8,29 +8,22 @@ class User < ApplicationRecord
        omniauth_providers: [:google_oauth2, :facebook]
 
   def self.from_omniauth(auth)
-    email = auth.info.email
-
-    # 🔥 SAFETY: handle nil email
-    unless email.present?
-      email = "temp_#{SecureRandom.hex(5)}@example.com"
-    end
-
-    user = User.find_by(email: email)
+    user = User.find_by(email: auth.info.email)
 
     if user
+      # 🔥 Account merge
       user.update(
         provider: auth.provider,
-        uid: auth.uid,
-        name: auth.info.name
+        uid: auth.uid
       )
     else
       user = User.create!(
-      email: email,
-      password: Devise.friendly_token[0, 20],
-      provider: auth.provider,
-      uid: auth.uid,
-      name: auth.info.name,
-      confirmed_at: Time.current
+        email: auth.info.email,
+        password: Devise.friendly_token[0, 20],
+        provider: auth.provider,
+        uid: auth.uid,
+        name: auth.info.name,
+        confirmed_at: Time.current # 🔥 skip email confirmation
       )
     end
 
