@@ -105,6 +105,18 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # 🔥 REQUIRED FOR OAUTH ON RENDER
+  config.action_controller.default_url_options = {
+  host: 'mini-app-backend-mkjh.onrender.com',
+  protocol: 'https'
+  }
+
+  config.assume_ssl = true
+
+  config.action_dispatch.trusted_proxies = [
+    IPAddr.new("0.0.0.0/0")
+  ]
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
