@@ -328,8 +328,7 @@ Devise.setup do |config|
     ENV['GOOGLE_CLIENT_SECRET'],
     {
       scope: 'email,profile',
-      callback_url: ENV['GOOGLE_CALLBACK_URL'],
-      provider_ignores_state: true
+      callback_url: ENV['GOOGLE_CALLBACK_URL']
     }
 
   config.jwt do |jwt|
