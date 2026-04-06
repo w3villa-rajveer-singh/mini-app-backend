@@ -326,8 +326,8 @@ Devise.setup do |config|
     # ✅ Issue JWT on login (Devise sessions)
     jwt.dispatch_requests = [
       ['POST', %r{^/login$}],
-      ['GET', %r{^/auth/google_oauth2/callback$}],
-      ['GET', %r{^/auth/facebook/callback$}]
+      ['GET', %r{^/users/auth/google_oauth2/callback$}],
+      ['GET', %r{^/users/auth/facebook/callback$}]
     ]
 
     # ✅ Revoke token on logout
@@ -337,7 +337,7 @@ Devise.setup do |config|
 
     # ✅ CRITICAL: allow JWT for JSON requests
     jwt.request_formats = {
-      user: [:json]
+      user: [:json, :html]
     }
 
     jwt.expiration_time = 1.day.to_i
