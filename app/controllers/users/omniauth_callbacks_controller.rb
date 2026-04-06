@@ -13,13 +13,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_omniauth(request.env['omniauth.auth'])
 
     if @user.persisted?
-      sign_in(@user)  # ✅ Devise generates JWT
+    sign_in(@user, scope: :user)
 
-      token = request.env['warden-jwt_auth.token']
+    token = Warden::JWTAuth::UserEncoder.new.call(@user, :user, nil).first
 
-      redirect_to "#{frontend_url}/social-login?token=#{token}"
+    redirect_to "#{frontend_url}/social-login?token=#{token}"
     else
-      redirect_to "/login"
+      redirect_to "#{frontend_url}/login"
     end
   end
 
