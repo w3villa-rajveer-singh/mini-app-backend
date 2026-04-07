@@ -13,13 +13,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @user = User.from_omniauth(request.env['omniauth.auth'])
 
     if @user && @user.persisted?
-    sign_in(@user, scope: :user)
+      sign_in(@user, scope: :user)
 
-    token = Warden::JWTAuth::UserEncoder.new.call(@user, :user, nil).first
+      token = Warden::JWTAuth::UserEncoder.new.call(@user, :user, nil).first
 
-    redirect_to "#{frontend_url}/social-login?token=#{token}"
+      redirect_to "#{frontend_url}/social-login?token=#{token}", allow_other_host: true
     else
-      redirect_to "#{frontend_url}/login"
+      redirect_to "#{frontend_url}/login", allow_other_host: true
     end
   end
 
