@@ -7,7 +7,9 @@ class User < ApplicationRecord
          jwt_revocation_strategy: JwtDenylist,
          omniauth_providers: [:google_oauth2, :facebook]
 
-  # 🔥 ADD THIS METHOD HERE
+  has_one_attached :avatar
+
+  # 🔥 OmniAuth method
   def self.from_omniauth(auth)
     email = auth.info.email
 

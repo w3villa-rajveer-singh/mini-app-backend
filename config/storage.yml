@@ -6,6 +6,15 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
+amazon:
+  service: S3
+  access_key_id: <%= ENV['STORJ_ACCESS_KEY'] %>
+  secret_access_key: <%= ENV['STORJ_SECRET'] %>
+  region: us-east-1
+  bucket: profile-avatars   # your bucket name
+  endpoint: https://gateway.storjshare.io
+  force_path_style: true
+
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3
