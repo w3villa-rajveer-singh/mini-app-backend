@@ -11,7 +11,8 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     email = auth.info.email
 
-    return nil unless email.present?   # prevent crash
+    # 🔥 Fallback if email is missing (Facebook case)
+    email ||= "#{auth.uid}@facebook.com"
 
     user = User.find_or_initialize_by(email: email)
 
