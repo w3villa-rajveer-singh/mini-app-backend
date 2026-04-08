@@ -6,7 +6,12 @@ class ProfilesController < ApplicationController
     render json: {
       message: "Authorized",
       user: current_user,
-      avatar_url: current_user.avatar.attached? ? url_for(current_user.avatar) : nil
+      avatar_url: current_user.avatar.attached? ? url_for(current_user.avatar) : nil,
+      location: {
+        address: current_user.address,
+        latitude: current_user.latitude,
+        longitude: current_user.longitude
+      }
     }
   end
 
@@ -15,7 +20,12 @@ class ProfilesController < ApplicationController
       render json: {
         message: "Profile updated successfully",
         user: current_user,
-        avatar_url: current_user.avatar.attached? ? url_for(current_user.avatar) : nil
+        avatar_url: current_user.avatar.attached? ? url_for(current_user.avatar) : nil,
+        location: {
+          address: current_user.address,
+          latitude: current_user.latitude,
+          longitude: current_user.longitude
+        }
       }
     else
       render json: {
@@ -27,6 +37,6 @@ class ProfilesController < ApplicationController
   private
 
   def profile_params
-    params.require(:user).permit(:name, :avatar)
+    params.require(:user).permit(:name, :avatar, :address, :latitude, :longitude)
   end
 end
