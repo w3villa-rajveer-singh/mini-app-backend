@@ -9,11 +9,12 @@ class User < ApplicationRecord
 
   has_one_attached :avatar
 
+  # ✅ Add this line
+  enum plan_type: { free: "free", silver: "silver", gold: "gold" }
+
   # 🔥 OmniAuth method
   def self.from_omniauth(auth)
     email = auth.info.email
-
-    # 🔥 Fallback if email is missing (Facebook case)
     email ||= "#{auth.uid}@facebook.com"
 
     user = User.find_or_initialize_by(email: email)
