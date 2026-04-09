@@ -1,6 +1,12 @@
-User.find_or_create_by!(email: "admin@gmail.com") do |u|
-  u.password = "admin123"
-  u.password_confirmation = "admin123"
-  u.admin = true
-  u.confirmed_at = Time.current   # 🔥 IMPORTANT
-end
+puts "🌱 Seeding admin user..."
+
+user = User.find_or_initialize_by(email: "admin@gmail.com")
+
+user.password = "admin123"
+user.password_confirmation = "admin123"
+user.admin = true
+user.confirmed_at = Time.current
+
+user.save!
+
+puts "✅ Admin ready: #{user.email}"
