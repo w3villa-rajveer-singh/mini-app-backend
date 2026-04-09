@@ -52,6 +52,7 @@ gem 'stripe'
 # Background jobs
 gem 'sidekiq', '~> 7.2'
 gem 'redis', '~> 4.8'
+gem 'sidekiq-cron'
 
 gem 'kaminari'   # pagination
 gem 'ransack'    # search/filter

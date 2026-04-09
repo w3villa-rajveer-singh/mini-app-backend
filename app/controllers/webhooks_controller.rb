@@ -20,16 +20,25 @@ class WebhooksController < ActionController::Base
     if event['type'] == 'checkout.session.completed'
       session = event['data']['object']
 
-      # ✅ NEW: Get user + plan from metadata
       user_id = session['metadata']['user_id']
       plan = session['metadata']['plan']
 
       user = User.find_by(id: user_id)
 
       if user
+        expiry_time =
+          case plan
+          when "silver"
+            6.hours.from_now
+          when "gold"
+            12.hours.from_now
+          else
+            1.hour.from_now
+          end
+
         user.update(
           plan_type: plan,
-          plan_expiry: 1.month.from_now
+          plan_expiry: expiry_time
         )
       end
     end
