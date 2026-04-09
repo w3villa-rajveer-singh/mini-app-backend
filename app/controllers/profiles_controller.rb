@@ -5,7 +5,18 @@ class ProfilesController < ApplicationController
   def show
     render json: {
       message: "Authorized",
-      user: current_user,
+      user: {
+        id: current_user.id,
+        email: current_user.email,
+        name: current_user.name,
+        admin: current_user.admin,
+        plan_type: current_user.plan_type,
+        plan_expiry: current_user.plan_expiry,
+        provider: current_user.provider,
+        uid: current_user.uid,
+        created_at: current_user.created_at,
+        updated_at: current_user.updated_at
+      },
       avatar_url: current_user.avatar.attached? ? url_for(current_user.avatar) : nil,
       location: {
         address: current_user.address,

@@ -22,7 +22,12 @@ Rails.application.routes.draw do
   # Profile
   resource :profile, only: [:show, :update]
 
+  # Payments
   post '/create-checkout', to: 'payments#create_checkout'
-
   post "/webhooks/stripe", to: "webhooks#stripe"
+
+  # Admin
+  namespace :admin do
+    resources :users, only: [:index]
+  end
 end
